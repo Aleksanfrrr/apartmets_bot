@@ -1,5 +1,8 @@
-#!/bin/bash
+#!/usr/bin/env bash
+set -e
+
 pip install --upgrade pip
-pip uninstall -y python-telegram-bot
-pip install python-telegram-bot==20.7
+pip uninstall -y python-telegram-bot || true
+pip install --no-cache-dir -r requirements.txt
+
 python bot.py
