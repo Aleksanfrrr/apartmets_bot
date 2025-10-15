@@ -1,8 +1,18 @@
 #!/usr/bin/env bash
 set -e
 
-pip install --upgrade pip
-pip uninstall -y python-telegram-bot || true
-pip install --no-cache-dir -r requirements.txt
+echo "== Show python-telegram-bot version =="
+python - <<'PY'
+import telegram
+print("PTB version:", getattr(telegram, "__version__", "unknown"))
+PY
 
+echo "== Show first 60 lines of bot.py =="
+nl -ba bot.py | sed -n '1,60p'
+
+echo "== Install requirements =="
+pip install --upgrade pip
+pip install -r requirements.txt
+
+echo "== RUN bot.py =="
 python bot.py
