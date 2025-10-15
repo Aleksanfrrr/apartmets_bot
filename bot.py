@@ -1,21 +1,18 @@
 import logging
 from telegram import Update, KeyboardButton, ReplyKeyboardMarkup
-from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, filters, ContextTypes
-import json
+from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, ContextTypes, filters
 
-# === Настройки ===
 BOT_TOKEN = "8088096127:AAGM3rWPCASkYPP3QEik_s7RuOVqQHfb8CA"
 ADMIN_CHAT_ID = 1402922835  # без кавычек
 
-# === Логирование ===
-logging.basicConfig(format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
-                    level=logging.INFO)
+logging.basicConfig(
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    level=logging.INFO
+)
 logger = logging.getLogger(__name__)
 
-# === Команда /start ===
+# --- Команда /start ---
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    user = update.message.from_user
-    logger.info(f"Пользователь {user.first_name} запустил бота.")
     keyboard = [
         [KeyboardButton("🌴 Phuket Holiday Apartments")],
         [KeyboardButton("📍 Контакты")],
@@ -29,7 +26,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         reply_markup=reply_markup
     )
 
-# === Ответы на кнопки ===
+# --- Обработка кнопок ---
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     text = update.message.text
 
@@ -56,7 +53,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     else:
         await update.message.reply_text("Пожалуйста, выберите вариант из меню.")
 
-# === Главная функция ===
+# --- Основной запуск ---
 def main():
     app = ApplicationBuilder().token(BOT_TOKEN).build()
 
